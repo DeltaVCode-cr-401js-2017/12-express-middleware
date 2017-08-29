@@ -14,7 +14,7 @@ const Workout = module.exports = function(exercise, weight, set, rep){
 };
 
 Workout.createWorkout = function(body){
-  if(!body) {
+  if(!body.exercise) {
     return Promise.reject(createError(400, 'body is missing'));
   }
   let workout = new Workout(body.exercise,body.weight,body.set,body.rep);

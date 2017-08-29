@@ -74,5 +74,11 @@ describe('/api/workout routes', function (){
         })
         .end(done);
     });
+    it('should return 404 when the id provided is not found', function (done){
+      request
+      .get('/api/workout?id=missingNo')
+      .expect(404)
+      .end(done);
+    });
   });
 });

@@ -59,8 +59,8 @@ exports.fetchItem = function(schemaName, id) {
     .then(data => {
       return JSON.parse(data.toString());
     })
-    .catch(err => {
-      return(Promise.reject(err));
+    .catch(() => {
+      return(Promise.reject(createError(404, 'file not found')));
     });
 
   /*

@@ -1,4 +1,4 @@
-![cf](https://i.imgur.com/7v5ASc8.png) 12: Express Middleware
+![DV](https://www.deltavcodeschool.com/wp-content/uploads/DeltaV.png) 12: Express Middleware
 ======
 
 ## Submission Instructions
@@ -22,6 +22,10 @@
 * `.gitignore`
 * `README.md`
   * your `README.md` should include detailed instructions on how to use your API
+
+Your `package.json` must include `scripts` for:
+* `lint`
+* `test`
 
 #### Feature Tasks
 * create a single resource `express` API that can handle **GET**, **POST**, and **PUT** requests

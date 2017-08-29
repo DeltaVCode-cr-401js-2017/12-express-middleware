@@ -8,8 +8,9 @@ const app = module.exports = express();
 
 app.use(require('./lib/cors-middleware'));
 
-app.get('/500', (req,res,next) => {
+app.get('/500', (req,res) => {
   debug('/500');
+  debug(res.headers);
   req.whatever();
 });
 

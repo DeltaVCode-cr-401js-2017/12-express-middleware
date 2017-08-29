@@ -21,3 +21,25 @@ Workout.createWorkout = function(body){
   debug(`Createing ${workout}`);
   return storage.createItem('Workout', workout);
 };
+
+Workout.fetchWorkout = function(id) {
+  debug(`fetch workout (${id})`);
+  return storage.fetchItem('workout', id);
+};
+
+Workout.updateWorkout = function(id, body){
+  debug(`update workout (${id})`);
+  return storage.fetchItem('workout',id)
+    .then(item=> {
+      for(var prop in item){
+        if(prop === 'id') {
+          continue;
+        }
+        if (prop in body){
+          item[prop] = body[prop];
+        }
+      }
+      return item;
+    });
+
+};

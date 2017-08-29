@@ -22,4 +22,57 @@ describe('/api/workout routes', function (){
       .end(done);
     });
   });
+  describe('PUT', function (){
+    before(function (done){
+      Workout.createWorkout(exampleWorkout)
+        .then(item => {
+          this.putWorkout = item;
+          done();
+        })
+        .catch(done);
+    });
+    after(function (done) {
+      if (this.putWorkout){
+        //delete it
+      }
+      done();
+    });
+    it('should update note by id', function (done) {
+      request
+      .put(`/api/workout?id=${this.putWorkout.id}`)
+      .send({exercise: 'updated', newProp: 'should not be found'})
+      .expect(200)
+      .expect(res => {
+        expect(res.body.id).to.equal(this.putWorkout.id);
+        expect(res.body.exercise).to.equal('updated');
+        expect(res.body.newProp).to.be.undefined;
+      })
+      .end(done);
+    });
+  });
+  describe('GET',function(){
+    before(function (done){
+      Workout.createWorkout(exampleWorkout)
+        .then(item => {
+          this.putWorkout = item;
+          done();
+        })
+        .catch(done);
+    });
+    after(function (done) {
+      if (this.putWorkout){
+        //delete it
+      }
+      done();
+    });
+    it('should return the item when given an id', function (done){
+      request
+        .get(`/api/workout?id=${this.putWorkout.id}`)
+        .expect(200)
+        .expect(res =>{
+          expect(res.body).to.deep.equal(this.putWorkout);
+        })
+        .end(done);
+    });
+  });
 });

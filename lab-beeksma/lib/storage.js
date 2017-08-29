@@ -50,7 +50,7 @@ exports.createItem = function(schemaName, item) {
 
 exports.fetchItem = function(schemaName, id) {
   if (!schemaName) return Promise.reject(createError(400, 'expected schema name'));
-
+  if(!id) return Promise.reject(createError(400, 'expected id'));
 
   const filePath = `${__dirname}/../data/${schemaName}/${id}.json`;
   if(!fs.existsSync(path.dirname(filePath)))  return Promise.reject(createError(404, 'schema not found'));
@@ -58,6 +58,9 @@ exports.fetchItem = function(schemaName, id) {
   return readFileAsync(filePath)
     .then(data => {
       return JSON.parse(data.toString());
+    })
+    .catch(err => {
+      return(Promise.reject(err));
     });
 
   /*

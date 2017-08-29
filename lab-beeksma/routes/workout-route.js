@@ -11,3 +11,10 @@ router.post('/api/workout', jsonParser, function (req, res, next){
     .then(workout => res.json(workout))
     .catch(err => next(err));
 });
+
+router.put('/api/workout', jsonParser, function (req,res,next){
+  debug('PUT: /api/workout');
+  Workout.updateWorkout(req.query.id, req.body)
+    .then(item => res.json(item))
+    .catch(next);
+});

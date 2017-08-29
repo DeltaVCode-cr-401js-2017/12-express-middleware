@@ -21,6 +21,12 @@ describe('/api/workout routes', function (){
       })
       .end(done);
     });
+    it('should return 400 if no body provided', function (done){
+      request
+      .post('/api/workout')
+      .expect(400)
+      .end(done);
+    });
   });
   describe('PUT', function (){
     before(function (done){

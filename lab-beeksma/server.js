@@ -10,6 +10,8 @@ app.get('/500', (req,res,next) => {
   next(new Error('boom'));
 });
 
+app.use(require('./routes/workout-route'));
+
 app.use(require('./lib/error-middleware'));
 
 if (!module.parent) {

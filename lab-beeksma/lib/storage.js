@@ -2,7 +2,8 @@
 
 const path = require('path');
 const fs = require('fs');
-const uuidv4 = require('uuid/v4');
+const debug = require('debug')('note:storage');
+const createError =  require('http-errors');
 
 module.exports = exports = {};
 
@@ -10,14 +11,6 @@ module.exports = exports = {};
 const writeFileAsync = promisify(fs.writeFile);
 const readFileAsync = promisify(fs.readFile);
 const unlinkFileAsync = promisify(fs.unlink);
-
-function Workout(exercise, weight, set, rep){
-  this.id = uuidv4();
-  this.exercise = exercise;
-  this.weight = weight;
-  this.set = set;
-  this.rep = rep;
-}
 
 
 function promisify(fn){
@@ -43,13 +36,11 @@ function ensureDirectoryExistance(filePath){
 }
 
 
-exports.createItem = function(schemaName, exercise, weight, set, rep) {
-  console.log(exercise);
-  if (!schemaName) return Promise.reject(new Error('expected schemaName'));
-  if (!exercise || !weight || !set || !rep) return Promise.reject(new Error('all expecise params required'));
-  let item = new Workout(exercise,weight,set,rep);
-
-  const filePath = `${__dirname}/../data${schemaName}/${item.id}.json`;
+exports.createItem = function(schemaName, item) {
+  if (!schemaName) return Promise.reject(createError(400, 'expected schema name'));
+  if (!item) return Promise.reject(createError(400, 'expected item'));
+  debug('Creating Item');
+  const filePath = `${__dirname}/../data/${schemaName}/${item.id}.json`;
   ensureDirectoryExistance(filePath);
 
   return writeFileAsync(filePath, JSON.stringify(item))
@@ -58,11 +49,11 @@ exports.createItem = function(schemaName, exercise, weight, set, rep) {
 
 
 exports.fetchItem = function(schemaName, id) {
-  if (!schemaName) return Promise.reject(new Error('expected schema name'));
+  if (!schemaName) return Promise.reject(createError(400, 'expected schema name'));
 
 
-  const filePath = `${__dirname}/../data${schemaName}/${id}.json`;
-  if(!fs.existsSync(path.dirname(filePath)))  return Promise.reject(new Error('schema not found'));
+  const filePath = `${__dirname}/../data/${schemaName}/${id}.json`;
+  if(!fs.existsSync(path.dirname(filePath)))  return Promise.reject(createError(404, 'schema not found'));
 
   return readFileAsync(filePath)
     .then(data => {
@@ -88,9 +79,9 @@ exports.fetchItem = function(schemaName, id) {
 
 exports.killItem = function(schemaName, id) {
   if (!schemaName) return Promise.reject(new Error('expected schema name'));
-  const filePath = `${__dirname}/../data${schemaName}/${id}.json`;
-  console.log(filePath);
-  if(!fs.existsSync(path.dirname(filePath)))  return Promise.reject(new Error('schema not found'));
+  const filePath = `${__dirname}/../data/${schemaName}/${id}.json`;
+  debug(filePath);
+  if(!fs.existsSync(path.dirname(filePath)))  return Promise.reject(createError(404, 'schema not found'));
 
   return unlinkFileAsync(filePath)
     .then(() => {

@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "cross-env DEBUG=app:* nodemon .",
-    "test:watch": "mocha -w",
-    "test": "mocha"
+    "test:watch": "cross-env DEBUG=app:* mocha -w",
+    "test": "cross-env DEBUG=app:* mocha"
   },
   "author": "",
   "license": "ISC",
@@ -17,8 +17,10 @@
     "supertest": "^3.0.0"
   },
   "dependencies": {
+    "body-parser": "^1.17.2",
     "debug": "^3.0.1",
     "express": "^4.15.4",
-    "http-errors": "^1.6.2"
+    "http-errors": "^1.6.2",
+    "uuid": "^3.1.0"
   }
 }

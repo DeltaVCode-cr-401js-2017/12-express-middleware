@@ -11,6 +11,13 @@ describe ('Express Infrastructure', function () {
     .expect(404)
     .end(done);
   });
+  it('should include CORS headers', function(done){
+    request
+      .get('/404')
+      .expect('Access-Controll-Allow-Headers', '*')
+      .expect('Access-Controll-Allow-Origin', '*')
+      .end(done);
+  });
   it('should handle 500', function (done){
     request
       .get('/500')

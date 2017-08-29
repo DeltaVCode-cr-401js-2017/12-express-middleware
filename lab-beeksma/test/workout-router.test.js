@@ -33,7 +33,7 @@ describe('/api/workout routes', function (){
     });
     after(function (done) {
       if (this.putWorkout){
-        //delete it
+        Workout.killWorkout(this.putWorkout.id);
       }
       done();
     });
@@ -61,7 +61,7 @@ describe('/api/workout routes', function (){
     });
     after(function (done) {
       if (this.putWorkout){
-        //delete it
+        Workout.killWorkout(this.putWorkout.id);
       }
       done();
     });

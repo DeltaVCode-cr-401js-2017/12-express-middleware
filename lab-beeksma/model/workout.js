@@ -41,5 +41,9 @@ Workout.updateWorkout = function(id, body){
       }
       return item;
     });
+};
 
+Workout.killWorkout = function(id){
+  debug(`delete workout (${id})`);
+  return storage.killItem('workout', id);
 };

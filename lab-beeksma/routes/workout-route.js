@@ -18,3 +18,10 @@ router.put('/api/workout', jsonParser, function (req,res,next){
     .then(item => res.json(item))
     .catch(next);
 });
+
+router.get('/api/workout', function (req, res, next){
+  debug('GET: /api/workout');
+  Workout.fetchWorkout(req.query.id)
+    .then(item => res.json(item))
+    .catch(next);
+});

@@ -80,5 +80,11 @@ describe('/api/workout routes', function (){
       .expect(404)
       .end(done);
     });
+    it('should return 400 when no id provided', function (done){
+      request
+      .get('/api/workout')
+      .expect(400)
+      .end(done);
+    });
   });
 });

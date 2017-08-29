@@ -17,7 +17,7 @@ router.put('/api/note',jsonParser,function(req,res,next){
   debug('PUT: /api/note');
 
   Note.updateNote(req.query.id,req.body)
-    .then(res.json)
+    .then(res.json.bind(res))
     .catch(next);
 });
 

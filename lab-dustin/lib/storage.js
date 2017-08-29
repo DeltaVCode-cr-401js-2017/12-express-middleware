@@ -2,6 +2,7 @@
 
 const path = require('path');
 const fs = require('fs');
+const createError = require('http-errors');
 
 const writeFileAsync = promisify(fs.writeFile);
 const readFileAsync = promisify(fs.readFile);
@@ -30,8 +31,8 @@ function ensureDirectoryExists(filePath){
 }
 
 exports.fetchItem = function(schemaName, id) {
-  if (!schemaName) return Promise.reject(new Error('expected schema name'));
-  if (!id) return Promise.reject(new Error('expected id'));
+  if (!schemaName) return Promise.reject(createError(400,'expected schema name'));
+  if (!id) return Promise.reject(createError(400,'expected id'));
 
   const filePath = `${__dirname}/../data/${schemaName}/${id}.json`;
   if (!fs.existsSync(path.dirname(filePath))){
@@ -49,8 +50,7 @@ exports.fetchItem = function(schemaName, id) {
     })
     .catch(err => {
       Promise.reject(createError(404,err.message));
-    })
-
+    });
 };
 
 exports.deleteItem = function(schemaName, id){

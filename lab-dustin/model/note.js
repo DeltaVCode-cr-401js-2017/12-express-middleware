@@ -1,3 +1,5 @@
+'use strict';
+
 const storage = require('../lib/storage');
 const debug = require('debug')('app:note');
 const uuid = require('uuid/v4');
@@ -24,7 +26,7 @@ Note.fetchNote = function(id){
 };
 
 Note.updateNote = function(id,body){
-  debug(`updateNote${id}`);
+  debug(`Update Note${id}`);
 
   return storage.fetchItem('note',id)
     .then(note => {
@@ -33,7 +35,7 @@ Note.updateNote = function(id,body){
           note[item] = body[item];
         }
       }
+      //TODO: update the note
       return note;
     });
-  //TODO: update the note
 };

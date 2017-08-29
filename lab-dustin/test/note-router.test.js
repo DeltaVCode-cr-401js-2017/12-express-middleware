@@ -39,7 +39,15 @@ describe('/api/note', function(){
         .send({ name: 'updated' })
         .expect(200)
         .expect(res => {
-          expect(res.body.name).should.equal('updated');
+          expect(res.body.id).to.equal(this.putNote.id);
+          expect(res.body.name).to.equal('updated');
+          expect(res.body.content).to.equal(this.putNote.content);
+          expect(res.body.newItem).to.be.undefined;
+        })
+        .expect({
+          id: this.putNote.id,
+          name: 'updated',
+          content: this.putNote.content
         })
         .end(done);
     });

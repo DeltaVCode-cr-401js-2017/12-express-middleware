@@ -10,10 +10,12 @@ app.use(require('./lib/cors-middleware'));
 
 app.get('/500', (req,res,next) => {
   debug('/500');
-  next();
+  req.whatever();
 });
-//REVIEW: this is where post routes will live
+
+//REVIEW: this is where routes will live
 app.use(require('./routes/note'));
+
 //REVIEW: this is middleware for error handling
 app.use(require('./lib/error-middleware'));
 

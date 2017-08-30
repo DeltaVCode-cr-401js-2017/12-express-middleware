@@ -108,6 +108,12 @@ describe('/api/workout routes', function (){
         .expect(204)
         .end(done);
     });
+    it('should return 404 for invalid ID', function (done){
+      request
+        .delete(`/api/workout?id=missingNo`)
+        .expect(404)
+        .end(done);
+    });
     it('should not find the deleted resource', function (done){
       request
         .get(`/api/workout?id=${this.putWorkout.id}`)

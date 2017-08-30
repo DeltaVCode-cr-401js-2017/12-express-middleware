@@ -25,3 +25,10 @@ router.get('/api/workout', function (req, res, next){
     .then(item => res.json(item))
     .catch(next);
 });
+
+router.delete('/api/workout', function (req, res, next){
+  debug('DELETE: /api/workout');
+  Workout.killWorkout(req.query.id)
+    .then(() => res.sendStatus(204))
+    .catch(next);
+});

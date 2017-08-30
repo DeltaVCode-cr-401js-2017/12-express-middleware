@@ -81,7 +81,7 @@ exports.fetchItem = function(schemaName, id) {
 };
 
 exports.killItem = function(schemaName, id) {
-  if (!schemaName) return Promise.reject(new Error('expected schema name'));
+  if (!schemaName) return Promise.reject(createError(400,'expected schema name'));
   const filePath = `${__dirname}/../data/${schemaName}/${id}.json`;
   debug(filePath);
   if(!fs.existsSync(path.dirname(filePath)))  return Promise.reject(createError(404, 'schema not found'));
@@ -89,5 +89,8 @@ exports.killItem = function(schemaName, id) {
   return unlinkFileAsync(filePath)
     .then(() => {
       return;
+    })
+    .catch(() => {
+      return(Promise.reject(createError(404, 'file not found')));
     });
 };

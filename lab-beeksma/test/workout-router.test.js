@@ -93,4 +93,26 @@ describe('/api/workout routes', function (){
       .end(done);
     });
   });
+  describe('DELETE', function (){
+    before(function (done){
+      Workout.createWorkout(exampleWorkout)
+        .then(item => {
+          this.putWorkout = item;
+          done();
+        })
+        .catch(done);
+    });
+    it('should return 204', function (done){
+      request
+        .delete(`/api/workout?id=${this.putWorkout.id}`)
+        .expect(204)
+        .end(done);
+    });
+    it('should not find the deleted resource', function (done){
+      request
+        .get(`/api/workout?id=${this.putWorkout.id}`)
+        .expect(404)
+        .end(done);
+    });
+  });
 });

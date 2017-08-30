@@ -4,7 +4,7 @@ const createError = require('http-errors');
 const debug = require('debug')('app:error-middleware');
 
 module.exports = function (err,req,res, next) {
-  console.error(err);
+  //console.error(err);
   debug(err.status);
 
   if(err.status) {
